@@ -21,7 +21,7 @@ public class ExampleForReserve {
         //新建一个预约请求.请求字段的定义及要求请参照文档或者源码.
         ReserveRequest request = new ReserveRequest();
         //填入预约请求所需要的参数.
-        request.setDeviceId("1000018");
+        //request.setDeviceId("1000018");
         request.setBoxType(BoxType.MEDIUM);
         request.setNotifyUrl("http://127.0.0.1/somewhere");
         //request.setNotifyUrl("http://www.yoursite.com/somewhere");

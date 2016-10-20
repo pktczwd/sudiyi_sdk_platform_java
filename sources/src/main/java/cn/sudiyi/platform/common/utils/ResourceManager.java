@@ -32,7 +32,7 @@ public class ResourceManager {
     }
 
     public static ResourceManager getInstance(String baseName) {
-        return new ResourceManager(baseName, Locale.getDefault());
+        return new ResourceManager(baseName, Locale.US);
     }
 
     public static ResourceManager getInstance(String baseName, Locale locale) {
