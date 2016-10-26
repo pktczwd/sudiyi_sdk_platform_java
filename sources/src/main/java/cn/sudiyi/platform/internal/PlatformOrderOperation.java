@@ -22,11 +22,7 @@ package cn.sudiyi.platform.internal;
 import cn.sudiyi.platform.ServiceException;
 import cn.sudiyi.platform.common.auth.CredentialsProvider;
 import cn.sudiyi.platform.common.comm.ServiceClient;
-import cn.sudiyi.platform.common.http.Delete;
-import cn.sudiyi.platform.common.http.Get;
-import cn.sudiyi.platform.common.http.HttpResponse;
-import cn.sudiyi.platform.common.http.HttpStatusCode;
-import cn.sudiyi.platform.common.http.TextPost;
+import cn.sudiyi.platform.common.http.*;
 import cn.sudiyi.platform.common.json.JSONConverter;
 import cn.sudiyi.platform.common.parser.ResponseParseException;
 import cn.sudiyi.platform.common.parser.ResponseParser;
@@ -35,14 +31,16 @@ import cn.sudiyi.platform.model.request.CancelReservationRequest;
 import cn.sudiyi.platform.model.request.DeliveryRequest;
 import cn.sudiyi.platform.model.request.QueryReservationRequest;
 import cn.sudiyi.platform.model.request.ReserveRequest;
+import cn.sudiyi.platform.model.response.DeliveryResponse;
 import cn.sudiyi.platform.model.response.GetDeadlettersResponse;
 import cn.sudiyi.platform.model.response.QueryReservationResponse;
 import cn.sudiyi.platform.model.response.ReserveResponse;
 
 /**
  * 订单操作
+ *
  * @author pankai
- * Dec 10, 2015
+ *         Dec 10, 2015
  */
 public class PlatformOrderOperation extends PlatformOperation {
 
@@ -138,17 +136,26 @@ public class PlatformOrderOperation extends PlatformOperation {
         });
     }
 
-    public void delivery(DeliveryRequest request) {
+    public DeliveryResponse delivery(DeliveryRequest request) {
+
+        CodingUtils.assertParameterNotNull(request, "deliveryRequest");
+        CodingUtils.assertStringNotNullOrEmpty(request.getDeviceId(), "deliveryRequest.deviceId");
+        CodingUtils.assertParameterNotNull(request.getBoxType(), "deliveryRequest.boxType");
+        CodingUtils.assertStringNotNullOrEmpty(request.getNotifyUrl(), "deliveryRequest.notifyUrl");
+        CodingUtils.assertStringNotNullOrEmpty(request.getOrderNo(), "deliveryRequest.orderNo");
+        CodingUtils.assertStringNotNullOrEmpty(request.getConsigneeMobile(), "deliveryRequest.consigneeMobile");
+        CodingUtils.assertParameterNotNull(request.getShopNo(), "deliveryRequest.shopNo");
+        CodingUtils.assertParameterNotNull(request.getExpectedFetchTime(), "deliveryRequest.expectedFetchTime");
+        CodingUtils.assertParameterNotNull(request.getCargoPrice(), "deliveryRequest.cargoPrice");
+
+
         String url = new StringBuilder(getEndpoint().toString()).append("/v1/deli").toString();
         TextPost post = new TextPost(url);
         post.setBody(JSONConverter.toJson(request));
-        doOperation(post, new ResponseParser<Object>() {
-
+        return doOperation(post, new ResponseParser<DeliveryResponse>() {
             @Override
-            public Object parse(HttpResponse response) throws ResponseParseException {
-                System.out.println(response.getStatusCode());
-                System.out.println(response.getResponseText());
-                return null;
+            public DeliveryResponse parse(HttpResponse response) throws ResponseParseException {
+                return JSONConverter.fromJson(DeliveryResponse.class, response.getResponseText());
             }
         });
     }

@@ -1,10 +1,9 @@
 package cn.sudiyi.platform.model.request;
 
-import java.math.BigDecimal;
-
 import cn.sudiyi.platform.model.BoxType;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.math.BigDecimal;
 
 public class DeliveryRequest {
 
@@ -34,6 +33,9 @@ public class DeliveryRequest {
     //期望取货时间
     @JsonProperty("expected_fetch_time")
     private Long expectedFetchTime;
+
+    @JsonProperty("shop_no")
+    private Integer shopNo;
 
     public String getDeviceId() {
         return deviceId;
@@ -91,4 +93,11 @@ public class DeliveryRequest {
         this.expectedFetchTime = expectedFetchTime;
     }
 
+    public Integer getShopNo() {
+        return shopNo;
+    }
+
+    public void setShopNo(Integer shopNo) {
+        this.shopNo = shopNo;
+    }
 }

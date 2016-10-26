@@ -19,15 +19,6 @@
 
 package cn.sudiyi.platform.common.comm;
 
-import java.io.IOException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.util.EntityUtils;
-
 import cn.sudiyi.platform.ClientConfiguration;
 import cn.sudiyi.platform.ClientException;
 import cn.sudiyi.platform.ServiceException;
@@ -35,6 +26,14 @@ import cn.sudiyi.platform.common.http.HttpHeaders;
 import cn.sudiyi.platform.common.http.HttpRequest;
 import cn.sudiyi.platform.common.http.HttpResponse;
 import cn.sudiyi.platform.common.http.HttpStatusCode;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 
 public class DefaultServiceClient extends ServiceClient {
 
@@ -53,7 +52,7 @@ public class DefaultServiceClient extends ServiceClient {
             CloseableHttpResponse response = executeMethod(request);
             HttpStatusCode statusCode = new HttpStatusCode(response.getStatusLine().getStatusCode());
             String responseText = readResponseText(response);
-            validateStatusCode(statusCode);
+            validateStatusCode(statusCode, responseText);
             HttpHeaders headers = HttpHeaders.createResponseHearders(response);
             return new HttpResponse(statusCode, headers, responseText);
         } catch (IOException e) {
@@ -76,12 +75,15 @@ public class DefaultServiceClient extends ServiceClient {
         return null != entity ? EntityUtils.toString(entity, "UTF-8") : "";
     }
 
-    private void validateStatusCode(HttpStatusCode statusCode) {
+    private void validateStatusCode(HttpStatusCode statusCode, String responseText) {
         if (HttpStatus.SC_FORBIDDEN == statusCode.getStatusCode()) {
             throw new ServiceException("无效的AccessId/AccessKey!");
         }
         if (HttpStatus.SC_INTERNAL_SERVER_ERROR == statusCode.getStatusCode()) {
             throw new ServiceException("服务端错误,请稍后再试.");
+        }
+        if (HttpStatus.SC_BAD_REQUEST == statusCode.getStatusCode()) {
+            throw new ServiceException("无效的请求:" + responseText);
         }
         if (!statusCode.isSuccess()) {
             throw new ServiceException("未定义的服务端响应,请稍后再试.响应码为:" + statusCode.getStatusCode());

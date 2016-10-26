@@ -30,12 +30,7 @@ import cn.sudiyi.platform.model.request.QueryClosestDeviceRequest;
 import cn.sudiyi.platform.model.request.QueryLatticeRequest;
 import cn.sudiyi.platform.model.request.QueryReservationRequest;
 import cn.sudiyi.platform.model.request.ReserveRequest;
-import cn.sudiyi.platform.model.response.GetDeadlettersResponse;
-import cn.sudiyi.platform.model.response.QueryBoxStatusOnlineResponse;
-import cn.sudiyi.platform.model.response.QueryBoxStatusResponse;
-import cn.sudiyi.platform.model.response.QueryClosestDeviceResponse;
-import cn.sudiyi.platform.model.response.QueryReservationResponse;
-import cn.sudiyi.platform.model.response.ReserveResponse;
+import cn.sudiyi.platform.model.response.*;
 
 /**
  * 速递易开放平台服务的访问接口
@@ -119,6 +114,11 @@ public interface Platform {
      */
     public List<QueryClosestDeviceResponse> queryClosestDevices(QueryClosestDeviceRequest request);
 
-    public void delivery(DeliveryRequest request);
+    /**
+     * 配送,达达提供运力支持
+     * @param request 配送请求
+     * @return 配送响应
+     */
+    public DeliveryResponse delivery(DeliveryRequest request);
 
 }
