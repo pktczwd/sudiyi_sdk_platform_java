@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.sudiyi.platform</groupId>
     <artifactId>sudiyi-sdk-platform</artifactId>
-    <version>0.0.7</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
     <name>Sudiyi Open Platform SDK for Java</name>
     <url>http://open.sudiyi.cn/</url>

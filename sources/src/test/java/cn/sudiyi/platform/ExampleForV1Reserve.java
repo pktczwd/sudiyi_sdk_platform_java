@@ -5,11 +5,12 @@ import cn.sudiyi.platform.model.request.ReserveRequest;
 import cn.sudiyi.platform.model.response.ReserveResponse;
 
 /**
- * 发起预约的示例
+ * 发起v1预约的示例
+ *
  * @author pankai
- * Dec 10, 2015
+ *         Dec 10, 2015
  */
-public class ExampleForReserve {
+public class ExampleForV1Reserve {
 
     private static final String ACCESS_ID = "41";
     private static final String ACCESS_KEY = "nn7jznfknxp9z69h";
@@ -21,7 +22,7 @@ public class ExampleForReserve {
         //新建一个预约请求.请求字段的定义及要求请参照文档或者源码.
         ReserveRequest request = new ReserveRequest();
         //填入预约请求所需要的参数.
-        //request.setDeviceId("1000018");
+        request.setDeviceId("1000018");
         request.setBoxType(BoxType.MEDIUM);
         request.setNotifyUrl("http://127.0.0.1/somewhere");
         //request.setNotifyUrl("http://www.yoursite.com/somewhere");

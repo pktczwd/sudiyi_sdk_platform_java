@@ -159,6 +159,11 @@ public class PlatformClient implements Platform {
         return orderOperation.reserve(request);
     }
 
+    @Override
+    public ReserveResponse reserveV2(ReserveRequestV2 request) {
+        return orderOperation.reserveV2(request);
+    }
+
     /**
      * 取消预约
      *

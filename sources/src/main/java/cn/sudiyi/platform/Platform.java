@@ -23,13 +23,7 @@ import java.util.List;
 
 import cn.sudiyi.platform.model.Lattice;
 import cn.sudiyi.platform.model.Province;
-import cn.sudiyi.platform.model.request.CancelReservationRequest;
-import cn.sudiyi.platform.model.request.DeliveryRequest;
-import cn.sudiyi.platform.model.request.QueryBoxStatusRequest;
-import cn.sudiyi.platform.model.request.QueryClosestDeviceRequest;
-import cn.sudiyi.platform.model.request.QueryLatticeRequest;
-import cn.sudiyi.platform.model.request.QueryReservationRequest;
-import cn.sudiyi.platform.model.request.ReserveRequest;
+import cn.sudiyi.platform.model.request.*;
 import cn.sudiyi.platform.model.response.*;
 
 /**
@@ -58,6 +52,8 @@ public interface Platform {
      * @return 预约响应{@link ReserveResponse}
      */
     public ReserveResponse reserve(ReserveRequest request);
+
+    public ReserveResponse reserveV2(ReserveRequestV2 request);
 
     /**
      * 取消预约

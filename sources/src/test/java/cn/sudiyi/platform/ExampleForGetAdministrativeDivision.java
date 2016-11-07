@@ -15,7 +15,8 @@ public class ExampleForGetAdministrativeDivision {
 
     private static final String ACCESS_ID = "41";
     private static final String ACCESS_KEY = "nn7jznfknxp9z69h";
-    private static final String TEST_ENDPOINT = "http://121.196.244.197:8095";
+    //private static final String TEST_ENDPOINT = "http://121.196.244.197:8095";
+    private static final String TEST_ENDPOINT = "http://127.0.0.1:8080";
 
     public static void main(String[] args) {
         //新建PlatformClient.测试时必须指定测试服的endpoint.生产环境时不必指定.
