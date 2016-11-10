@@ -117,4 +117,6 @@ public interface Platform {
      */
     public DeliveryResponse delivery(DeliveryRequest request);
 
+    public void resetConsignee(ResetConsigneeRequest request);
+
 }

@@ -261,4 +261,14 @@ public class PlatformClient implements Platform {
         return orderOperation.delivery(request);
     }
 
+    /**
+     * 重新设置人
+     *
+     * @param request
+     */
+    @Override
+    public void resetConsignee(ResetConsigneeRequest request) {
+        orderOperation.resetConsignee(request);
+    }
+
 }

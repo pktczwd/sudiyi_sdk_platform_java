@@ -194,4 +194,24 @@ public class PlatformOrderOperation extends PlatformOperation {
         });
     }
 
+    public void resetConsignee(ResetConsigneeRequest request) {
+
+        CodingUtils.assertStringNotNullOrEmpty(request.getUuid(), "resetConsigneeRequest.uuid");
+        CodingUtils.assertStringNotNullOrEmpty(request.getClientTel(), "resetConsigneeRequest.clientTel");
+
+        String url = new StringBuilder(getEndpoint().toString()).append("/v1/resetConsignee").toString();
+        TextPost post = new TextPost(url);
+        post.setBody(JSONConverter.toJson(request));
+        doOperation(post, new ResponseParser<Void>() {
+            @Override
+            public Void parse(HttpResponse response) throws ResponseParseException {
+                HttpStatusCode statusCode = response.getStatusCode();
+                if (200 != statusCode.getStatusCode()) {
+                    throw new ServiceException(CodingUtils.parseUnexpectedResponse(response));
+                }
+                return null;
+            }
+        });
+    }
+
 }

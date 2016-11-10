@@ -5,10 +5,7 @@ import cn.sudiyi.platform.model.request.ReserveRequestV2;
 import cn.sudiyi.platform.model.response.ReserveResponse;
 
 /**
- * 发起v1预约的示例
- *
- * @author pankai
- *         Dec 10, 2015
+ * 发起v2预约的示例
  */
 public class ExampleForV2Reserve {
 
