@@ -30,10 +30,7 @@ import cn.sudiyi.platform.common.parser.ResponseParser;
 import cn.sudiyi.platform.common.utils.CodingUtils;
 import cn.sudiyi.platform.model.BoxType;
 import cn.sudiyi.platform.model.request.*;
-import cn.sudiyi.platform.model.response.DeliveryResponse;
-import cn.sudiyi.platform.model.response.GetDeadlettersResponse;
-import cn.sudiyi.platform.model.response.QueryReservationResponse;
-import cn.sudiyi.platform.model.response.ReserveResponse;
+import cn.sudiyi.platform.model.response.*;
 
 /**
  * 订单操作
@@ -113,6 +110,29 @@ public class PlatformOrderOperation extends PlatformOperation {
         });
     }
 
+    public ReservationResponse reserveV3(ReserveRequestV3 request) {
+
+        String url = new StringBuilder(getEndpoint().toString()).append("/v3/resv").toString();
+        TextPost post = new TextPost(url);
+        post.setBody(JSONConverter.toJson(request));
+        return doOperation(post, new ResponseParser<ReservationResponse>() {
+
+            @Override
+            public ReservationResponse parse(HttpResponse response) throws ResponseParseException {
+                HttpStatusCode statusCode = response.getStatusCode();
+                if (!statusCode.isSuccess()) {
+                    if (420 == statusCode.getStatusCode()) {
+                        throw new ServiceException("请求过于频繁!");
+                    } else if (421 == statusCode.getStatusCode()) {
+                        throw new ServiceException("超过预约上限!");
+                    } else {
+                        throw new ServiceException(CodingUtils.parseUnexpectedResponse(response));
+                    }
+                }
+                return JSONConverter.fromJson(ReservationResponse.class, response.getResponseText());
+            }
+        });
+    }
 
     public Boolean cancelReserve(CancelReservationRequest request) {
 
@@ -133,6 +153,21 @@ public class PlatformOrderOperation extends PlatformOperation {
                 } else {
                     throw new ServiceException(CodingUtils.parseUnexpectedResponse(response));
                 }
+            }
+        });
+    }
+
+    public void cancelReserve(CancelReservationRequestV3 request) {
+        CodingUtils.assertParameterNotNull(request, "cancelReservationRequestV3");
+        CodingUtils.assertParameterNotNull(request.getReservationId(), "cancelReservationRequestV3.reservationId");
+        String url = new StringBuilder(getEndpoint().toString()).append("/v3/cancel").toString();
+        TextPost post = new TextPost(url);
+        post.setBody(JSONConverter.toJson(request));
+        doOperation(post, new ResponseParser<Void>() {
+
+            @Override
+            public Void parse(HttpResponse response) throws ResponseParseException {
+                return null;
             }
         });
     }
@@ -209,6 +244,18 @@ public class PlatformOrderOperation extends PlatformOperation {
                 if (200 != statusCode.getStatusCode()) {
                     throw new ServiceException(CodingUtils.parseUnexpectedResponse(response));
                 }
+                return null;
+            }
+        });
+    }
+
+    public void addCourierMobile(AddCourierMobileRequest request) {
+        String url = new StringBuilder(getEndpoint().toString()).append("/v3/addCourierMobile").toString();
+        TextPost post = new TextPost(url);
+        post.setBody(JSONConverter.toJson(request));
+        doOperation(post, new ResponseParser<Void>() {
+            @Override
+            public Void parse(HttpResponse response) throws ResponseParseException {
                 return null;
             }
         });

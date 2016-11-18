@@ -48,6 +48,7 @@ public class PlatformClient implements Platform {
     private PlatformLatticeOperation latticeOperation;
     private PlatformDeviceOperation deviceOperation;
     private PlatformOrderOperation orderOperation;
+    private PlatformCodeOperation codeOperation;
 
     /**
      * 使用速递易颁发的Access Id/Access Key构造一个新的{@link PlatformClient}对象.
@@ -100,6 +101,7 @@ public class PlatformClient implements Platform {
         latticeOperation = new PlatformLatticeOperation(this.serviceClient, this.credsProvider);
         deviceOperation = new PlatformDeviceOperation(this.serviceClient, this.credsProvider);
         orderOperation = new PlatformOrderOperation(this.serviceClient, this.credsProvider);
+        codeOperation = new PlatformCodeOperation(this.serviceClient, this.credsProvider);
     }
 
     /**
@@ -113,6 +115,7 @@ public class PlatformClient implements Platform {
         this.latticeOperation.setEndpoint(uri);
         this.deviceOperation.setEndpoint(uri);
         this.orderOperation.setEndpoint(uri);
+        this.codeOperation.setEndpoint(uri);
     }
 
     private URI toURI(String endpoint) throws IllegalArgumentException {
@@ -164,6 +167,11 @@ public class PlatformClient implements Platform {
         return orderOperation.reserveV2(request);
     }
 
+    @Override
+    public ReservationResponse reserveV3(ReserveRequestV3 request) {
+        return orderOperation.reserveV3(request);
+    }
+
     /**
      * 取消预约
      *
@@ -173,6 +181,11 @@ public class PlatformClient implements Platform {
     @Override
     public Boolean cancelReserve(CancelReservationRequest request) {
         return orderOperation.cancelReserve(request);
+    }
+
+    @Override
+    public void cancelReserve(CancelReservationRequestV3 request) {
+        orderOperation.cancelReserve(request);
     }
 
     /**
@@ -262,13 +275,28 @@ public class PlatformClient implements Platform {
     }
 
     /**
-     * 重新设置人
+     * 重新设置收件人
      *
      * @param request
      */
     @Override
     public void resetConsignee(ResetConsigneeRequest request) {
         orderOperation.resetConsignee(request);
+    }
+
+    /**
+     * 设置指定开箱码为结束码
+     *
+     * @param request
+     */
+    @Override
+    public void codeEnd(CodeEndRequest request) {
+        codeOperation.codeEnd(request);
+    }
+
+    @Override
+    public void addCourierMobile(AddCourierMobileRequest request) {
+        orderOperation.addCourierMobile(request);
     }
 
 }

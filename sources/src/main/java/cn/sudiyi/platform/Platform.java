@@ -55,12 +55,16 @@ public interface Platform {
 
     public ReserveResponse reserveV2(ReserveRequestV2 request);
 
+    public ReservationResponse reserveV3(ReserveRequestV3 request);
+
     /**
      * 取消预约
      * @param request 取消预约请求{@link CancelReservationRequest}
      * @return 取消预约请求是否成功
      */
     public Boolean cancelReserve(CancelReservationRequest request);
+
+    public void cancelReserve(CancelReservationRequestV3 request);
 
     /**
      * 查询预约状态
@@ -118,5 +122,9 @@ public interface Platform {
     public DeliveryResponse delivery(DeliveryRequest request);
 
     public void resetConsignee(ResetConsigneeRequest request);
+
+    public void codeEnd(CodeEndRequest request);
+
+    public void addCourierMobile(AddCourierMobileRequest request);
 
 }
