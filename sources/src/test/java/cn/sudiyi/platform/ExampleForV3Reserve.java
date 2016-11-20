@@ -23,7 +23,7 @@ public class ExampleForV3Reserve {
         request.setDeviceId("1000081");
         request.setBoxType(BoxType.MEDIUM);
         request.setNotifyUrl("http://127.0.0.1/somewhere");
-        request.setOrderNo("0028");
+        request.setOrderNo("0029");
         request.setOpenCodeCount(12);
         request.setDuration(30);
         //发起一个预约请求,得到预约响应

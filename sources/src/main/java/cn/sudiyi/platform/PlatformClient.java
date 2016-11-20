@@ -299,4 +299,9 @@ public class PlatformClient implements Platform {
         orderOperation.addCourierMobile(request);
     }
 
+    @Override
+    public void freeDevice(FreeRequest freeRequest) {
+        deviceOperation.freeDevice(freeRequest);
+    }
+
 }

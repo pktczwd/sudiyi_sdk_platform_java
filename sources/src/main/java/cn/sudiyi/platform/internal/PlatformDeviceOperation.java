@@ -19,21 +19,23 @@
 
 package cn.sudiyi.platform.internal;
 
-import java.util.List;
-
 import cn.sudiyi.platform.common.auth.CredentialsProvider;
 import cn.sudiyi.platform.common.comm.ServiceClient;
 import cn.sudiyi.platform.common.http.Get;
 import cn.sudiyi.platform.common.http.HttpResponse;
+import cn.sudiyi.platform.common.http.TextPost;
 import cn.sudiyi.platform.common.json.JSONConverter;
 import cn.sudiyi.platform.common.parser.ResponseParseException;
 import cn.sudiyi.platform.common.parser.ResponseParser;
 import cn.sudiyi.platform.common.utils.CodingUtils;
+import cn.sudiyi.platform.model.request.FreeRequest;
 import cn.sudiyi.platform.model.request.QueryBoxStatusRequest;
 import cn.sudiyi.platform.model.request.QueryClosestDeviceRequest;
 import cn.sudiyi.platform.model.response.QueryBoxStatusOnlineResponse;
 import cn.sudiyi.platform.model.response.QueryBoxStatusResponse;
 import cn.sudiyi.platform.model.response.QueryClosestDeviceResponse;
+
+import java.util.List;
 
 public class PlatformDeviceOperation extends PlatformOperation {
 
@@ -90,6 +92,19 @@ public class PlatformDeviceOperation extends PlatformOperation {
             @Override
             public List<QueryClosestDeviceResponse> parse(HttpResponse response) throws ResponseParseException {
                 return JSONConverter.fromJson(List.class, response.getResponseText(), QueryClosestDeviceResponse.class);
+            }
+        });
+
+    }
+
+    public void freeDevice(FreeRequest request) {
+        String url = new StringBuilder(getEndpoint().toString()).append("/v1/admin/freeDevice").toString();
+        TextPost post = new TextPost(url);
+        post.setBody(JSONConverter.toJson(request));
+        doOperation(post, new ResponseParser<Void>() {
+            @Override
+            public Void parse(HttpResponse response) throws ResponseParseException {
+                return null;
             }
         });
 

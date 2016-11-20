@@ -19,12 +19,12 @@
 
 package cn.sudiyi.platform;
 
-import java.util.List;
-
 import cn.sudiyi.platform.model.Lattice;
 import cn.sudiyi.platform.model.Province;
 import cn.sudiyi.platform.model.request.*;
 import cn.sudiyi.platform.model.response.*;
+
+import java.util.List;
 
 /**
  * 速递易开放平台服务的访问接口
@@ -126,5 +126,7 @@ public interface Platform {
     public void codeEnd(CodeEndRequest request);
 
     public void addCourierMobile(AddCourierMobileRequest request);
+
+    public void freeDevice(FreeRequest freeRequest);
 
 }

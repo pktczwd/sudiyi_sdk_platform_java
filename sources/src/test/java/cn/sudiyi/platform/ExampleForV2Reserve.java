@@ -16,7 +16,7 @@ public class ExampleForV2Reserve {
 
     public static void main(String[] args) {
         //新建PlatformClient.测试时必须指定测试服的endpoint.生产环境时不必指定.
-        PlatformClient client = new PlatformClient(TEST_ENDPOINT, ACCESS_ID, ACCESS_KEY);
+        PlatformClient client = new PlatformClient(ACCESS_ID, ACCESS_KEY);
         //新建一个预约请求.请求字段的定义及要求请参照文档或者源码.
         ReserveRequestV2 request = new ReserveRequestV2();
         //填入预约请求所需要的参数.
